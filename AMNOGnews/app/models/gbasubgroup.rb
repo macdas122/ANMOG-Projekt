@@ -1,0 +1,2 @@
+class Gbasubgroup < ApplicationRecord
+end

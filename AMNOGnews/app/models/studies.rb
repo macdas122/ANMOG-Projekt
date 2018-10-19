@@ -1,0 +1,2 @@
+class Studies < ApplicationRecord
+end

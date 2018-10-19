@@ -1,0 +1,152 @@
+<style>
+  .box {
+       float: left;
+       width: 48%;
+       margin-right: 2%;
+       box-sizing: border-box;
+  }
+  .holeBox {
+       float: left;
+       width: 99%;
+       margin-right: 1%;
+       padding: 20px;
+       box-sizing: border-box;
+  }
+  /* Style the tab */
+.tab {
+   overflow: hidden;
+   border: 1px solid #ccc;
+   background-color: #f1f1f1;
+}
+
+/* Style the buttons that are used to open the tab content */
+.tab button {
+   background-color: inherit;
+   float: left;
+   border: none;
+   outline: none;
+   cursor: pointer;
+   padding: 14px 16px;
+   transition: 0.3s;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+   background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+   background-color: #ccc;
+}
+
+/* Style the tab content */
+.tabcontent {
+   display: none;
+   padding: 6px 12px;
+   border: 1px solid #ccc;
+   border-top: none;
+}
+</style>
+<script>
+function openCity(evt, cityName) {
+    // Declare all variables
+    var i, tabcontent, tablinks;
+
+    // Get all elements with class="tabcontent" and hide them
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+
+    // Get all elements with class="tablinks" and remove the class "active"
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+
+    // Show the current tab, and add an "active" class to the button that opened the tab
+    document.getElementById(cityName).style.display = "block";
+    evt.currentTarget.className += " active";
+}
+</script>
+
+
+<section>
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">Skc Anmog</a>
+      </div>
+      <ul class="nav navbar-nav">
+        <li><a href="dashboard">Newsfeed</a></li>
+        <li class="active"><a href="mains">Data Base</a></li>
+        <li><a href="mains/show">Search</a></li>
+        <li><a href="../main">Insert</a></li>
+        <li><a href="#">Contact</a></li>
+        <li> <%= link_to "Log Out", destroy_skc_session_path, method: :delete %></li>
+      </ul>
+    </div>
+  </nav>
+</section>
+
+<header class="holeBox">
+    <h1 class="h1">Data Base</h1>
+</header>
+<section class="holeBox">
+  <section = class="box">
+    <%= pie_chart Main.group(:status).count , titel: "Value" %>
+    <h4 class="h4" align="center">Status of procedure</h4>
+  </section>
+  <section = class="box">
+    <%= pie_chart Main.where("status = 'finished'", params[:status]).group(:field_of_application).count %>
+    <h4 class="h4" align="center">Fields of Application of finished procedure</h4>
+  </section>
+</section>
+<section>
+  <div class="tab">
+    <button class="tablinks" onclick="openCity(event, 'home')">Main</button>
+    <button class="tablinks" onclick="openCity(event, 'sub')">Subgroups</button>
+  </div>
+</section>
+
+<div id="home" class="tabcontent">
+<section class="holeBox">
+     <h1 class="holeBox">Datatable:</h1>
+    <table class="table" border=1>
+        <thead>
+            <tr>
+                <th>Number</th>
+                <th>Drug Name</th>
+                <th>Brand Name</th>
+                <th>Manufacturer</th>
+                <th>Status</th>
+                <th>Indication</th>
+                <th>Field of Application</th>
+                <th>Orphan Drug</th>
+                <th>Subgroup(s)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% @mains.each do |main| %>
+                <tr>
+                    <td><%= main.gba_number %></td>
+                    <td><%= main.drug_name %></td>
+                    <td><%= main.brand_name %></td>
+                    <td><%= main.manufacturer %></td>
+                    <td><%= main.status %></td>
+                    <td><%= main.indication %></td>
+                    <td><%= main.field_of_application %></td>
+                    <td><%= main.orphan_drug %></td>
+                    <td><%= main.subgroups %></td>
+                </tr>
+            <% end %>
+        </tbody>
+    </table>
+</section>
+</div>
+  <div id="sub" class="tabcontent">
+      <h3>TestSubtable</h3>
+
+  </div>
+</div>

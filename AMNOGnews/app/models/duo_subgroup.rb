@@ -1,0 +1,2 @@
+class DuoSubgroup < ApplicationRecord
+end

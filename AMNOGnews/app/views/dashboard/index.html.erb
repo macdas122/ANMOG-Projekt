@@ -1,0 +1,89 @@
+<style>
+  .box {
+       float: left;
+       width: 40%;
+       margin-right: 1%;
+       box-sizing: border-box;
+  }
+  .holeBox {
+       float: left;
+       width: 99%;
+       margin-right: 1%;;
+       box-sizing: border-box;
+  }
+  .allBox{
+       float: left;
+       width: 99%;
+       margin-right: 1%;
+       padding: 26px;
+       box-sizing: border-box;
+  }
+  .center {
+    text-align: center;
+  }
+</style>
+<section>
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">Skc Anmog</a>
+      </div>
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="dashboard">Newsfeed</a></li>
+        <li><a href="mains">Data Base</a></li>
+        <li><a href="mains/show">Search</a></li>
+        <li><a href="../main">Insert</a></li>
+        <li><a href="#">Contact</a></li>
+        <li> <%= link_to "Log Out", destroy_skc_session_path, method: :delete %></li>
+      </ul>
+    </div>
+  </nav>
+</section>
+<header class="center">
+    <h1>
+         ANMOG Newsfeed
+    </h1>
+</header>
+<section class="allBox">
+  <section = class="box">
+    <%= column_chart Gbasubgroup.where("manufacturer = 'GBA'").group(:benefit).count , legend: false %>
+    <h4 class="h4" align="center">Completed procedure acc. to subgroup's additional benefit category</h4>
+  </section>
+  <section = class="box">
+    <%= column_chart @orphan %>
+    <h4 class="h4" align="center">Completed procedure acc. to highest subgroup benefit category</h4>
+  </section>
+</section>
+<section>
+    <h4>Person name opened : <%= @count_opened%> released : <%= @count_released %> adjusted : <%= @count_adjusted %> finished : <%= @count_finished %> </h4>
+</section>
+<section class="allBox">
+    <% @mains.each do |main| %>
+    <section class="holeBox">
+      <details>
+          <summary>
+            <li><h4><u>Procedure <%= main.status %> <%= main.end_procedure %> for <%=main.drug_name%></u></h4></li>
+          </summary>
+          <section class="box">
+            <ul>Drug : <%= main.drug_name %></ul>
+            <ul>Brand : <%= main.brand_name %></ul>
+            <ul>Manufacturer : <%= main.manufacturer %></ul>
+            <ul>Field of application : <%= main.field_of_application %></ul>
+          </section>
+          <section class="box">
+            <ul>Orphan : <%= main.orphan_drug %></ul>
+            <ul>Subgroups : <%= main.subgroups %></ul>
+            <ul>Indication : <%= main.indication %></ul>
+          </section>
+          <section class="holeBox">
+            <details>
+              <summary>
+                <li><h5><u>GBA Text</u></h5></li>
+              </summary>
+                <ul>text here </ul>
+            </details>
+          </section>
+        </details>
+      </section>
+    <% end %>
+</section>

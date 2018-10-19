@@ -1,0 +1,16 @@
+{
+  "name": "webpack-rails-example",
+  "version": "0.0.1",
+  "license": "MIT",
+  "dependencies": {
+    "@rails/webpacker": "3.5",
+    "chart.js": "^2.7.2",
+    "chartkick": "^3.0.0",
+    "stats-webpack-plugin": "^0.4.3",
+    "webpack-dev-server": "2.11.2"
+  },
+  "devDependencies": {
+    "webpack": "^1.15.0",
+    "webpack-cli": "^3.1.0"
+  }
+}

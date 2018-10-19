@@ -1,0 +1,168 @@
+<style>
+.box {
+     float: left;
+     width: 32%;
+     margin-right: 1%;
+     padding: 2px;
+     border-style: solid;
+     border-width: 1px;
+     box-sizing: border-box;
+}
+.smallbox {
+     float: left;
+     width: 45%;
+     margin-right: 1%;
+     padding: 1px;
+     box-sizing: border-box;
+}
+.casing {
+     float: left;
+     width: 99%;
+     margin-right: 1%;
+     padding: 1px;
+     box-sizing: border-box;
+}
+.holeCasing {
+     float: left;
+     width: 99%;
+     margin-right: 0%;
+     padding: 1px;
+     border-style: solid;
+     border-width: 1px;
+     box-sizing: border-box;
+}
+</style>
+<section>
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">Skc Anmog</a>
+      </div>
+      <ul class="nav navbar-nav">
+        <li><a href="../dashboard">Newsfeed</a></li>
+        <li><a href="../mains">Data Base</a></li>
+        <li><a href="../mains/show">Search</a></li>
+        <li class="active"><a href="../main">Insert</a></li>
+        <li><a href="#">Contact</a></li>
+        <li> <%= link_to "Log Out", destroy_skc_session_path, method: :delete %></li>
+      </ul>
+    </div>
+  </nav>
+</section>
+<head>
+</head>
+
+<section class="box">
+      <h3>New Procedure</h3>
+    <%= form_for :Main, :url => { :action => "create" }, :html => {:class => "nifty_form"} do |f| %>
+        <%= f.hidden_field :id , :value => @count %>
+        <%= f.hidden_field :subgroups , :value => 0 %>
+        <div class="smallbox">G-BA Number: </div><div class="smallbox"><%= f.text_field :gba_number %> </div><br />
+        <div class="smallbox">Drug name: </div><div class="smallbox"><%= f.text_field :drug_name %></div> <br />
+        <div class="smallbox">Brand name: </div><div class="smallbox"><%= f.text_field :brand_name %> </div><br />
+        <div class="smallbox">Manufacturer:</div><div class="smallbox"> <%= f.text_field :manufacturer %> </div></div><br />
+        <div class="casing"><div class="smallbox">Orphan drug: </div><div class="smallbox"><%= f.check_box :orphan_drug %></div></div> <br />
+        <h4><u> placeholder </u></h4>
+        <div class="casing"><div class="smallbox">New field of application: </div><div class="smallbox"><%= f.check_box :new_field %></div></div> <br />
+        <div class="casing"><div class="smallbox">Re-assessment after expiry of the time limit: </div><div class="smallbox"><%= f.check_box :expired_time %></div></div> <br />
+        <div class="casing"><div class="smallbox">Re-assessment on the basis of new scientific evidence: </div><div class="smallbox"><%= f.check_box :basic_evidence %></div></div> <br />
+        <div class="casing"><div class="smallbox">Exceedance of Euro 50M threshold:</div><div class="smallbox"><%= f.check_box :exceedance_money %></div></div> <br />
+        <div class="casing"><div class="smallbox">Lors of odd:  </div><div class="smallbox"><%= f.check_box :lors_of_odd %></div></div> <br />
+        <div class="smallbox">Start: </div><div class="smallbox"><%= f.date_field :start_procedure %> </div><br />
+        <div class="smallbox">End: </div><div class="smallbox"><%= f.date_field :end_procedure %> </div><br />
+        <div class="smallbox">Status: </div><div class="smallbox"><%= f.select(:status, options_for_select([['started' , 'started'],['exempted' , 'exempted'],['repealed' , 'repealed'],['completed' , 'completed'],['discontinued' , 'discontinued'],['no status','no status']])) %></div>  <br />
+        <div class="smallbox">Field of Application: </div><div class="smallbox"><%= f.select(:field_of_application, options_for_select([['Cardiology' , 'Cardiology'],['Dermatology' , 'Dermatology'],['Diseases of the Musculoskeletal system','Diseases of the Musculoskeletal system'],['Gastroenterology' ,'Gastroenterology'],['Hematology' , 'Hematology'],['Immunology' , 'Immunology'],['Infectiology' , 8],['Metabolic disease' , 'Metabolic disease'],['Neurology' , 'Neurology'],['Oncology' , 'Oncology'],['Ophthalmology' , 'Ophthalmology'],['Other' , 'Other']])) %></div> <br />
+        <div class="smallbox">Indication: </div><div class="smallbox"><%= f.text_area :indication %></div> <br />
+        <%= f.hidden_field :benefit_percentige , :value => 0 %> <br />
+        <div class="smallbox">Benefit: </div><div class="smallbox"><%= f.check_box :benefit %></div> <br />
+        <div class="smallbox">Market availability: </div><div class="smallbox"><%= f.select(:market_availability, options_for_select([['yes' , 'yes'],['withdrawn' , 'withdrawn'],['opt-out','opt-out'],['no status','no status']]))  %> </div> <br />
+        <%= f.submit %>
+      <% end %>
+</section>
+<section class="box">
+  <section class="holeCasing">
+    <h3>New Subgroup</h3>
+    <%= form_for :Subgroups, :url => {:controller => "subgroup" , :action => "create" }, :html => {:class => "nifty_form"} do |s| %>
+    <%= s.hidden_field :id , :value => @scount %>
+  <div class="smallbox">       Manufacturer : </div></div><div class="smallbox"> <%= s.select(:manufacturer , options_for_select([['Pc' , 'Pc']])) %></div> <br />
+  <div class="smallbox">       G-BA Number : </div><div class="smallbox"> <%=  s.collection_select(:gba_number, Main.all, :gba_number, :gba_number)  %></div> <br />
+  <div class="smallbox">       Subgroup name : </div><div class="smallbox"> <%= s.text_field :sub_name %></div> <br />
+  <div class="smallbox">       ACT : </div><div class="smallbox"> <%= s.text_field :act %></div> <br />
+  <div class="smallbox">       Evidence : </div><div class="smallbox"> <%= s.check_box :evidence %></div> <br />
+  <div class="smallbox">       ITC : </div><div class="smallbox"> <%= s.check_box :itc %> </div><br />
+  <%= s.hidden_field :studies , :value => 0 %>
+  <div class="smallbox">       Population min.: </div><div class="smallbox"> <%= s.number_field :population_min %></div> <br />
+  <div class="smallbox">       Population max : </div><div class="smallbox"> <%= s.number_field :population_max %> </div><br /> </div><br />
+  <div class="smallbox">       Cost of ZVT.: </div><div class="smallbox"> <%= s.number_field :cost_zvt , step: :any%></div> <br />
+  <div class="smallbox">       Cost of drug: </div><div class="smallbox"> <%= s.number_field :cost_drug, step: :any %></div> <br />
+  <h4><u> additional benefit </u></h4>
+  <div class="smallbox"> Lightihood: </div><div class="smallbox"><%= s.select(:lightihood, options_for_select([['indication' , 'indication'],['pint','pint'],['proofed','proofed']]))  %> </div> <br />
+  <div class="smallbox">       Benefit : </div><div class="smallbox"> <%= s.select(:benefit , options_for_select([['major','major benefit'],['considerable','considerable benefit'],['minor','minor benefit'],['not quantified','not quantified benefit'],['no benefit','no benefit']])) %> </div><br />
+  <%= s.submit %>
+<% end %>
+</section>
+<section class="holeCasing">
+  <h3>New Subgroup</h3>
+  <%= form_for :Gbasubgroups, :url => {:controller => "gbasubgroup" , :action => "create" }, :html => {:class => "nifty_form"} do |ds| %>
+    <%= ds.hidden_field :id , :value => @scount %>
+    <div class="smallbox">       Manufacturer : </div></div><div class="smallbox"> <%= ds.select(:manufacturer , options_for_select([['G-BA' , 'IQWiG']])) %></div> <br />
+    <div class="smallbox">       G-BA Number : </div><div class="smallbox"> <%=  ds.collection_select(:gba_number, Main.all, :gba_number, :gba_number)  %></div> <br />
+    <div class="smallbox">       Subgroup name : </div><div class="smallbox"> <%= ds.text_field :sub_name %></div> <br />
+    <div class="smallbox">       ACT : </div><div class="smallbox"> <%= ds.text_field :act %></div> <br />
+    <div class="smallbox">       Evidence : </div><div class="smallbox"> <%= ds.check_box :evidence %></div> <br />
+    <div class="smallbox">       ITC : </div><div class="smallbox"> <%= ds.check_box :itc %> </div><br />
+    <div class="smallbox">       Study No.1: </div><div class="smallbox"><%= ds.collection_select(:study_one, Studies.all, :id, :study_name, prompt: true) %> </div> <br />
+    <div class="smallbox">       Study No.2: </div><div class="smallbox"><%= ds.collection_select(:study_two, Studies.all, :id, :study_name, prompt: true) %> </div> <br />
+    <div class="smallbox">       Study No.3: </div><div class="smallbox"><%= ds.collection_select(:study_thre, Studies.all, :id, :study_name, prompt: true) %> </div> <br />
+    <div class="smallbox">       Study No.4: </div><div class="smallbox"><%= ds.collection_select(:study_four, Studies.all, :id, :study_name, prompt: true) %> </div> <br />
+    <div class="smallbox">       Study No.5: </div><div class="smallbox"><%= ds.collection_select(:study_five, Studies.all, :id, :study_name, prompt: true) %> </div> <br />
+    <div class="smallbox">       Study No.6: </div><div class="smallbox"><%= ds.collection_select(:study_six, Studies.all, :id, :study_name, prompt: true) %> </div> <br />
+    <div class="smallbox">       Population min.: </div><div class="smallbox"> <%= ds.number_field :population_min %></div> <br />
+    <div class="smallbox">       Population max : </div><div class="smallbox"> <%= ds.number_field :population_max %> </div><br /> </div><br />
+    <div class="smallbox">       Cost of ZVT.: </div><div class="smallbox"> <%= ds.number_field :cost_zvt , step: :any%></div> <br />
+    <div class="smallbox">       Cost of drug: </div><div class="smallbox"> <%= ds.number_field :cost_drug, step: :any %></div> <br />
+    <h4><u> additional benefit </u></h4>
+    <div class="smallbox">        Lightihood: </div><div class="smallbox"><%= ds.select(:lightihood, options_for_select([['indication' , 'indication'],['pint','pint'],['proofed','proofed']]))  %> </div> <br />
+    <div class="smallbox">       Benefit : </div><div class="smallbox"> <%= ds.select(:benefit , options_for_select([['major','major benefit'],['considerable','considerable benefit'],['minor','minor benefit'],['not quantified','not quantified benefit'],['no benefit','no benefit']])) %> </div><br />
+    <%= ds.submit %>
+  <% end %>
+
+</section>
+</section>
+<section class="box">
+  <section class="holeCasing">
+      <h3>New Study</h3>
+        <%= form_for :Studies, :url => {:controller => "studies" , :action => "create" }, :html => {:class => "nifty_form"} do |st| %>
+        <%= st.hidden_field :id , :value => @scount %>
+        <div class="smallbox">Number :</div><div class="smallbox"> <%=  st.collection_select(:gba_number, Subgroup.all, :gba_number, :gba_number)  %></div>
+        <div class="smallbox">Study name :</div><div class="smallbox"><%= st.text_field :study_name %></div>
+        <%= st.hidden_field :study_arm_number , :value => 0 %>
+        <div class="smallbox">Pivotal</div><div class="smallbox"><%= st.check_box :pivotal %></div>
+        <div class="smallbox">Cross-over</div><div class="smallbox"><%= st.check_box :cross_over %></div>
+        <div class="smallbox">Extension</div><div class="smallbox"><%= st.check_box :extension %></div>
+        <div class="smallbox">Controlled</div><div class="smallbox"><%= st.check_box :controlled %></div>
+        <div class="smallbox">Registry</div><div class="smallbox"><%= st.check_box :registry %></div>
+        <div class="smallbox">Nhs</div><div class="smallbox"><%= st.check_box :nhs %></div>
+        <div class="smallbox">Randomized</div><div class="smallbox"><%= st.check_box :randomized %></div>
+        <div class="smallbox">Randomization :</div><div class="smallbox"><%= st.text_field :randomization %></div>
+        <%= st.hidden_field :population , :value => 0 %>
+        <div class="smallbox">Study length :</div><div class="smallbox"><%= st.text_field :study_length %></div>
+
+                <div class="smallbox">Annotation: </div><div class="smallbox"><%= st.text_area :annotation %></div> <br />
+        <%= st.submit %>
+      <% end %>
+</section>
+<section class="holeCasing">
+  <h3>New Study arm</h3>
+          <%= form_for :Study_arms, :url => {:controller => "study_arms" , :action => "create" }, :html => {:class => "nifty_form"} do |sa| %>
+          <%= sa.hidden_field :id , :value => @scount %>
+          <div class="smallbox">Manufacturer :</div><div class="smallbox"><%= sa.select(:controlled_intervention , options_for_select([['controlled','controlled'],['intervention','intervention']])) %></div>
+          <div class="smallbox">G-BA Number :</div><div class="smallbox"> <%=  sa.collection_select(:gba_number, Studies.all , :gba_number , :gba_number) %> </div>
+          <div class="smallbox">Dosing:</div><div class="smallbox"><%= sa.text_field :dosing %></div>
+          <div class="smallbox">Blinded</div><div class="smallbox"><%= sa.check_box :blinded %></div>
+          <div class="smallbox">Itc</div><div class="smallbox"><%= sa.check_box :itc %></div>
+          <div class="smallbox">Number of Patients :</div><div class="smallbox"><%= sa.number_field :number_patient %></div>
+          <%= sa.submit %>
+          <% end %>
+</section>
+</section>

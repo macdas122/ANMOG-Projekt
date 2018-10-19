@@ -1,0 +1,2 @@
+class StudyArm < ApplicationRecord
+end
