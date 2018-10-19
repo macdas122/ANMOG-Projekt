@@ -26,7 +26,7 @@
         <li><a href="../dashboard">Newsfeed</a></li>
         <li><a href="../mains">Data Base</a></li>
         <li class="active"><a href="show">Search</a></li>
-        <li><a href="../main">Insert</a></li>        
+        <li><a href="../main">Insert</a></li>
         <li><a href="#">Contact</a></li>
         <li> <%= link_to "Log Out", destroy_skc_session_path, method: :delete %></li>
       </ul>
@@ -84,7 +84,7 @@
           <tbody>
               <% @mains.each do |main| %>
                   <tr>
-                    <td><%= main.number %></td>
+                    <td><%= main.gba_number %></td>
                     <td><%= main.drug_name %></td>
                     <td><%= main.brand_name %></td>
                     <td><%= main.manufacturer %></td>

@@ -2,33 +2,28 @@
 .box {
      float: left;
      width: 32%;
-     margin-right: 1%;
+     margin-right: 0.5%;
+     margin-left: 0.5%;
      padding: 2px;
-     border-style: solid;
-     border-width: 1px;
      box-sizing: border-box;
 }
 .smallbox {
      float: left;
      width: 45%;
-     margin-right: 1%;
      padding: 1px;
      box-sizing: border-box;
 }
 .casing {
      float: left;
-     width: 99%;
-     margin-right: 1%;
+     width: 100%;
      padding: 1px;
      box-sizing: border-box;
 }
 .holeCasing {
      float: left;
-     width: 99%;
-     margin-right: 0%;
-     padding: 1px;
+     width: 100%;
      border-style: solid;
-     border-width: 1px;
+     border-width: 3px;
      box-sizing: border-box;
 }
 </style>
@@ -53,8 +48,9 @@
 </head>
 
 <section class="box">
-      <h3>New Procedure</h3>
-    <%= form_for :Main, :url => { :action => "create" }, :html => {:class => "nifty_form"} do |f| %>
+   <section class="holeCasing">
+      <h3><u>New Procedure</u></h3>
+      <%= form_for :Main, :url => { :action => "create" }, :html => {:class => "nifty_form"} do |f| %>
         <%= f.hidden_field :id , :value => @count %>
         <%= f.hidden_field :subgroups , :value => 0 %>
         <div class="smallbox">G-BA Number: </div><div class="smallbox"><%= f.text_field :gba_number %> </div><br />
@@ -76,12 +72,14 @@
         <%= f.hidden_field :benefit_percentige , :value => 0 %> <br />
         <div class="smallbox">Benefit: </div><div class="smallbox"><%= f.check_box :benefit %></div> <br />
         <div class="smallbox">Market availability: </div><div class="smallbox"><%= f.select(:market_availability, options_for_select([['yes' , 'yes'],['withdrawn' , 'withdrawn'],['opt-out','opt-out'],['no status','no status']]))  %> </div> <br />
-        <%= f.submit %>
+        <%= f.submit "save procedure" %>
       <% end %>
+    </section>
 </section>
+
 <section class="box">
   <section class="holeCasing">
-    <h3>New Subgroup</h3>
+    <h3><u>New Subgroup</u></h3>
     <%= form_for :Subgroups, :url => {:controller => "subgroup" , :action => "create" }, :html => {:class => "nifty_form"} do |s| %>
     <%= s.hidden_field :id , :value => @scount %>
   <div class="smallbox">       Manufacturer : </div></div><div class="smallbox"> <%= s.select(:manufacturer , options_for_select([['Pc' , 'Pc']])) %></div> <br />
@@ -98,11 +96,11 @@
   <h4><u> additional benefit </u></h4>
   <div class="smallbox"> Lightihood: </div><div class="smallbox"><%= s.select(:lightihood, options_for_select([['indication' , 'indication'],['pint','pint'],['proofed','proofed']]))  %> </div> <br />
   <div class="smallbox">       Benefit : </div><div class="smallbox"> <%= s.select(:benefit , options_for_select([['major','major benefit'],['considerable','considerable benefit'],['minor','minor benefit'],['not quantified','not quantified benefit'],['no benefit','no benefit']])) %> </div><br />
-  <%= s.submit %>
+  <%= s.submit "save subgroup"%>
 <% end %>
 </section>
 <section class="holeCasing">
-  <h3>New Subgroup</h3>
+  <h3><u>New Subgroup</u></h3>
   <%= form_for :Gbasubgroups, :url => {:controller => "gbasubgroup" , :action => "create" }, :html => {:class => "nifty_form"} do |ds| %>
     <%= ds.hidden_field :id , :value => @scount %>
     <div class="smallbox">       Manufacturer : </div></div><div class="smallbox"> <%= ds.select(:manufacturer , options_for_select([['G-BA' , 'IQWiG']])) %></div> <br />
@@ -124,14 +122,14 @@
     <h4><u> additional benefit </u></h4>
     <div class="smallbox">        Lightihood: </div><div class="smallbox"><%= ds.select(:lightihood, options_for_select([['indication' , 'indication'],['pint','pint'],['proofed','proofed']]))  %> </div> <br />
     <div class="smallbox">       Benefit : </div><div class="smallbox"> <%= ds.select(:benefit , options_for_select([['major','major benefit'],['considerable','considerable benefit'],['minor','minor benefit'],['not quantified','not quantified benefit'],['no benefit','no benefit']])) %> </div><br />
-    <%= ds.submit %>
+    <%= ds.submit "save subgroup"%>
   <% end %>
 
 </section>
 </section>
 <section class="box">
   <section class="holeCasing">
-      <h3>New Study</h3>
+      <h3><u>New Study</u></h3>
         <%= form_for :Studies, :url => {:controller => "studies" , :action => "create" }, :html => {:class => "nifty_form"} do |st| %>
         <%= st.hidden_field :id , :value => @scount %>
         <div class="smallbox">Number :</div><div class="smallbox"> <%=  st.collection_select(:gba_number, Subgroup.all, :gba_number, :gba_number)  %></div>
@@ -149,11 +147,11 @@
         <div class="smallbox">Study length :</div><div class="smallbox"><%= st.text_field :study_length %></div>
         <div class="smallbox">Evidence </div><div class="smallbox"><%= st.select(:evidenz, options_for_select([['1a','1a'],['1b','1b'],['2a','2a'],['2b','2b'],['3','3'],['4','4']])) %></div>
                 <div class="smallbox">Annotation: </div><div class="smallbox"><%= st.text_area :annotation %></div> <br />
-        <%= st.submit %>
+        <%= st.submit "save study"%>
       <% end %>
 </section>
 <section class="holeCasing">
-  <h3>New Study arm</h3>
+  <h3><u>New Study arm</u></h3>
           <%= form_for :Study_arms, :url => {:controller => "study_arms" , :action => "create" }, :html => {:class => "nifty_form"} do |sa| %>
           <%= sa.hidden_field :id , :value => @scount %>
           <div class="smallbox">Manufacturer :</div><div class="smallbox"><%= sa.select(:controlled_intervention , options_for_select([['controlled','controlled'],['intervention','intervention']])) %></div>
@@ -163,7 +161,7 @@
           <div class="smallbox">Blinded :</div><div class="smallbox"><%= sa.check_box :blinded %></div>
           <div class="smallbox">Itc :</div><div class="smallbox"><%= sa.check_box :itc %></div>
           <div class="smallbox">Number of Patients :</div><div class="smallbox"><%= sa.number_field :number_patient %></div>
-          <%= sa.submit %>
+          <%= sa.submit "save study arm"%>
           <% end %>
 </section>
 </section>
