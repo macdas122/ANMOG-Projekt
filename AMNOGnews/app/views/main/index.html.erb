@@ -107,7 +107,7 @@
     <%= ds.hidden_field :id , :value => @scount %>
     <div class="smallbox">       Manufacturer : </div></div><div class="smallbox"> <%= ds.select(:manufacturer , options_for_select([['G-BA' , 'IQWiG']])) %></div> <br />
     <div class="smallbox">       G-BA Number : </div><div class="smallbox"> <%=  ds.collection_select(:gba_number, Main.all, :gba_number, :gba_number)  %></div> <br />
-    <div class="smallbox">       Subgroup name : </div><div class="smallbox"> <%= ds.text_field :sub_name %></div> <br />
+    <div class="smallbox">       Subgroup name : </div><div class="smallbox"> <%= ds.text_field :name %></div> <br />
     <div class="smallbox">       ACT : </div><div class="smallbox"> <%= ds.text_field :act %></div> <br />
     <div class="smallbox">       Evidence : </div><div class="smallbox"> <%= ds.check_box :evidence %></div> <br />
     <div class="smallbox">       ITC : </div><div class="smallbox"> <%= ds.check_box :itc %> </div><br />
@@ -147,7 +147,7 @@
         <div class="smallbox">Randomization :</div><div class="smallbox"><%= st.text_field :randomization %></div>
         <%= st.hidden_field :population , :value => 0 %>
         <div class="smallbox">Study length :</div><div class="smallbox"><%= st.text_field :study_length %></div>
-
+        <div class="smallbox">Evidence </div><div class="smallbox"><%= st.select(:evidenz, options_for_select([['1a','1a'],['1b','1b'],['2a','2a'],['2b','2b'],['3','3'],['4','4']])) %></div>
                 <div class="smallbox">Annotation: </div><div class="smallbox"><%= st.text_area :annotation %></div> <br />
         <%= st.submit %>
       <% end %>
@@ -158,9 +158,10 @@
           <%= sa.hidden_field :id , :value => @scount %>
           <div class="smallbox">Manufacturer :</div><div class="smallbox"><%= sa.select(:controlled_intervention , options_for_select([['controlled','controlled'],['intervention','intervention']])) %></div>
           <div class="smallbox">G-BA Number :</div><div class="smallbox"> <%=  sa.collection_select(:gba_number, Studies.all , :gba_number , :gba_number) %> </div>
-          <div class="smallbox">Dosing:</div><div class="smallbox"><%= sa.text_field :dosing %></div>
-          <div class="smallbox">Blinded</div><div class="smallbox"><%= sa.check_box :blinded %></div>
-          <div class="smallbox">Itc</div><div class="smallbox"><%= sa.check_box :itc %></div>
+          <div class="smallbox">Mediacation :</div><div class="smallbox"><%= sa.text_field :medication %></div>
+          <div class="smallbox">Dosing :</div><div class="smallbox"><%= sa.text_field :dosing %></div>
+          <div class="smallbox">Blinded :</div><div class="smallbox"><%= sa.check_box :blinded %></div>
+          <div class="smallbox">Itc :</div><div class="smallbox"><%= sa.check_box :itc %></div>
           <div class="smallbox">Number of Patients :</div><div class="smallbox"><%= sa.number_field :number_patient %></div>
           <%= sa.submit %>
           <% end %>

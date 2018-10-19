@@ -99,7 +99,7 @@ function openCity(evt, cityName) {
     <h4 class="h4" align="center">Status of procedure</h4>
   </section>
   <section = class="box">
-    <%= pie_chart Main.where("status = 'finished'", params[:status]).group(:field_of_application).count %>
+    <%= pie_chart Main.where("status = 'completed'", params[:status]).group(:field_of_application).count %>
     <h4 class="h4" align="center">Fields of Application of finished procedure</h4>
   </section>
 </section>
